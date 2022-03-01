@@ -216,3 +216,14 @@ button.btn-delete-all {
 .preventClick {
   pointer-events: none;
 }
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  margin: 10px auto;
+}
+.github {
+	font-size: 2rem;
+	color: darkcyan;
+}
