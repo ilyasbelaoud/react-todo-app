@@ -1,0 +1,43 @@
+.toggle-btn {
+	position: absolute;
+	top: 0;
+	right: 20px;
+	
+	input[type="checkbox"] {
+	visibility: hidden;
+	&:checked + label {
+		transform: rotate(360deg);
+		background-color: #111;
+		&:before {
+			transform: translateX(45px);
+			background-color: #f8ffaf;
+		}
+	}
+}
+
+label {
+	display: flex;
+	width: 90px;
+	height: 45px;
+	border: 3px solid #111;
+	border-radius: 99em;
+	position: relative;
+	transition: transform .5s ease-in-out;
+	transform-origin: 50% 50%;
+	cursor: pointer;
+	
+	&:before {
+		transition: transform 1s ease;
+		transition-delay: .5s;
+		content: "";
+		display: block;
+		position: absolute;
+		width: 27px;
+		height: 27px;
+		background-color: #111;
+		border-radius: 50%;
+		top: 6px;
+		left: 6px;
+	}
+}
+}
