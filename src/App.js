@@ -30,7 +30,7 @@ const App = () => {
   const addTask = (e) => {
     e.preventDefault();
     if (!name) {
-      showAlert(true, "Invalid Task Name!");
+      showAlert(true, "PUT A VALID TASK NAME");
     } else if (name && isEditing) {
       setTasks(
         tasks.map((task) => {
@@ -40,7 +40,7 @@ const App = () => {
       setIsEditing(false);
       setEditId(null);
       setName("");
-      showAlert(true, "Task Edited.");
+      showAlert(true, "TASK EDITED");
     } else {
       const newTask = {
         id: uuid().slice(0, 8),
@@ -49,7 +49,7 @@ const App = () => {
         color: "#009688",
       };
       setTasks([...tasks, newTask]);
-      showAlert(true, "Task Added.");
+      showAlert(true, "NEW TASK ADDED");
       setName("");
     }
   };
@@ -60,7 +60,7 @@ const App = () => {
 
   const deleteAll = () => {
     setTasks([]);
-    showAlert(true, "Your list is clear!");
+    showAlert(true, "LOOKS LIKE YOUR LIST IS CLEAR");
   };
 
   useEffect(() => {
@@ -93,7 +93,7 @@ const App = () => {
         <input
           type='text'
           ref={inputRef}
-          placeholder='New Task'
+          placeholder='INPUT NEW TASK'
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
@@ -105,28 +105,28 @@ const App = () => {
           className={filter === "all" ? "active" : ""}
           onClick={filterTasks}
         >
-          All
+          ALL
         </button>
         <button
           data-filter='completed'
           className={filter === "completed" ? "active" : ""}
           onClick={filterTasks}
         >
-          Completed
+          COMPLETED TASKS
         </button>
         <button
           data-filter='uncompleted'
           className={filter === "uncompleted" ? "active" : ""}
           onClick={filterTasks}
         >
-          Uncompleted
+          UNCOMPLETED TASKS
         </button>
       </div>
       <DragDropContext onDragEnd={handleDragEnd}>
         {tasks.length > 0 ? (
           <List />
         ) : (
-          <p className='no-tasks'>Your list is clear!</p>
+          <p className='no-tasks'>LOOKS LIKE YOUR LIST IS CLEAR!</p>
         )}
       </DragDropContext>
       {tasks.length > 2 && (
@@ -135,15 +135,14 @@ const App = () => {
           onClick={deleteAll}
           title='Delete All Tasks (Completed and Uncompleted)!'
         >
-          Clear All
+          CLEAR ALL
         </button>
       )}
 	  <DarkModeToggle/>
 	  
     </div>
-	<div class="footer">
-		<a href='https://github.com/ilyasbelaoud' target='_blank' rel="noopener noreferrer"><FaGithub className='github'/></a>
-	</div>
+	
+
 	</>
   );
 };
