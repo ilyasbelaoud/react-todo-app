@@ -21,7 +21,7 @@ const AppProvider = ({ children }) => {
 
   const removeTask = (id) => {
     setTasks(tasks.filter((task) => task.id !== id));
-    showAlert(true, "SUCCESSFULLY REMOVED TASK");
+    showAlert(true, "Task Removed.");
   };
 
   const toggleDone = (id) => {
@@ -30,7 +30,7 @@ const AppProvider = ({ children }) => {
         task.id === id ? { ...task, completed: !task.completed } : task
       )
     );
-    showAlert(true, "TASK CHECKED");
+    showAlert(true, "Task State Changed.");
   };
 
   const editTask = (id) => {
