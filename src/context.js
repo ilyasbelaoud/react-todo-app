@@ -1,4 +1,5 @@
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useContext, useRef, useMemo } from "react";
+import PropTypes from "prop-types";
 
 const getTasks = () => {
   const tasks = localStorage.getItem("tasks");
@@ -51,37 +52,67 @@ const AppProvider = ({ children }) => {
     setIsColorsOpen(true);
   };
 
+  const memoizedValue = useMemo(() => {
+    return {
+      tasks,
+      setTasks,
+      removeTask,
+      toggleDone,
+      refContainer,
+      alert,
+      showAlert,
+      isEditing,
+      setIsEditing,
+      editId,
+      setEditId,
+      editTask,
+      name,
+      setName,
+      getTasks,
+      filter,
+      setFilter,
+      inputRef,
+      location,
+      setLocation,
+      isColorsOpen,
+      setIsColorsOpen,
+      showColors,
+    };
+  }, [
+    tasks,
+    setTasks,
+    removeTask,
+    toggleDone,
+    refContainer,
+    alert,
+    showAlert,
+    isEditing,
+    setIsEditing,
+    editId,
+    setEditId,
+    editTask,
+    name,
+    setName,
+    getTasks,
+    filter,
+    setFilter,
+    inputRef,
+    location,
+    setLocation,
+    isColorsOpen,
+    setIsColorsOpen,
+    showColors,
+  ]);
+
   return (
-    <AppContext.Provider
-      value={{
-        tasks,
-        setTasks,
-        removeTask,
-        toggleDone,
-        refContainer,
-        alert,
-        showAlert,
-        isEditing,
-        setIsEditing,
-        editId,
-        setEditId,
-        editTask,
-        name,
-        setName,
-        getTasks,
-        filter,
-        setFilter,
-        inputRef,
-        location,
-        setLocation,
-        isColorsOpen,
-        setIsColorsOpen,
-        showColors,
-      }}
-    >
-      {children}
+    <AppContext.Provider value={ memoizedValue }>
+      { children }
     </AppContext.Provider>
   );
+};
+
+AppProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 const useGlobalContext = () => {
