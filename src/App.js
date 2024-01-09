@@ -41,14 +41,14 @@ const App = () => {
       showAlert(true, "Task Edited.");
     } else {
       const newTask = {
-        id: uuid().slice(0, 8),
+        id: uuid(),
         name: name,
         completed: false,
         color: "#009688",
       };
       setTasks([...tasks, newTask]);
       showAlert(true, "Task Added.");
-      setName("");
+      setName(""); // Clear input
     }
   };
 
@@ -77,13 +77,13 @@ const App = () => {
   };
 
   const handleClick = () => {
-    // Agrega tu lógica de clic aquí
+    inputRef.current.focus();
   };
 
   return (
     <>
       <form className='head' onSubmit={ addTask } aria-labelledby="formHeading">
-        <label htmlFor="taskInput" className="text-title">New Task</label>
+        <label className="text-title" htmlFor="newTaskInput">New Task</label>
         <input
           type='text'
           ref={ inputRef }

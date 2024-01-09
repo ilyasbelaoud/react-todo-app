@@ -1,5 +1,6 @@
+// context.js
 import React, { useState, useContext, useRef, useMemo } from "react";
-import PropTypes from "prop-types";
+import { AppProviderPropTypes } from "./PropTypes";
 
 const getTasks = () => {
   const tasks = localStorage.getItem("tasks");
@@ -111,9 +112,8 @@ const AppProvider = ({ children }) => {
   );
 };
 
-AppProvider.propTypes = {
-  children: PropTypes.node.isRequired,
-};
+// Utiliza las definiciones de propiedades
+AppProvider.propTypes = AppProviderPropTypes;
 
 const useGlobalContext = () => {
   return useContext(AppContext);

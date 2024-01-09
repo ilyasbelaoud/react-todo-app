@@ -16,8 +16,9 @@ const DarkModeToggle = () => {
 
 	return (
 		<div className='toggle-btn'>
-			<input type="checkbox" id="toggle" checked={ isDarkMode } onChange={ (e) => setIsDarkMode(e.target.checked) } />
-			<label htmlFor="toggle"></label>
+			<label htmlFor="toggle">
+				<input type="checkbox" id="toggle" checked={ isDarkMode } onChange={ (e) => setIsDarkMode(e.target.checked) } />
+			</label>
 		</div>
 	)
 }
