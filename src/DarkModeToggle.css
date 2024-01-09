@@ -1,0 +1,45 @@
+.toggle-btn {
+	position: absolute;
+	top: 0;
+	right: 1.25rem;
+}
+
+.toggle-btn input[type="checkbox"] {
+	visibility: hidden;
+}
+
+.toggle-btn input[type="checkbox"]:checked+label {
+	transform: rotate(360deg);
+	background-color: #111;
+}
+
+.toggle-btn input[type="checkbox"]:checked+label:before {
+	transform: translateX(2.8125rem);
+	background-color: #f8ffaf;
+}
+
+.toggle-btn label {
+	display: flex;
+	width: 5.625rem;
+	height: 2.8125rem;
+	border: 0.1875rem solid #111;
+	border-radius: 99em;
+	position: relative;
+	transition: transform 0.5s ease-in-out;
+	transform-origin: 50% 50%;
+	cursor: pointer;
+}
+
+.toggle-btn label:before {
+	transition: transform 1s ease;
+	transition-delay: 0.5s;
+	content: "";
+	display: block;
+	position: absolute;
+	width: 1.6875rem;
+	height: 1.6875rem;
+	background-color: #111;
+	border-radius: 50%;
+	top: 0.375rem;
+	left: 0.375rem;
+}
