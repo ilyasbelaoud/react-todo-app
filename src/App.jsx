@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import { v4 as uuid } from "uuid";
+import { v4 as uuidv4 } from "uuid";
 import { DragDropContext } from "react-beautiful-dnd";
 import List from "./List";
 import Alert from "./Alert";
-import { useGlobalContext } from "./context";
 import Colors from "./Colors";
 import DarkModeToggle from './DarkModeToggle';
+import { useGlobalContext } from "./context";
 
 const App = () => {
   const {
@@ -25,6 +25,31 @@ const App = () => {
     isColorsOpen,
   } = useGlobalContext();
 
+  useEffect(() => {
+    inputRef.current.focus();
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [inputRef, tasks]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("../Tasks.json");
+        const responseBody = await response.text();
+        const tasksData = JSON.parse(responseBody);
+        const tasksWithUuid = tasksData.map(task => ({
+          ...task,
+          id: uuidv4()
+        }));
+
+        setTasks(tasksWithUuid);
+      } catch (error) {
+        console.error("Error al cargar las tareas:", error);
+      }
+    };
+
+    fetchData();
+  }, [setTasks]);
+
   const addTask = (e) => {
     e.preventDefault();
     if (!name) {
@@ -41,7 +66,7 @@ const App = () => {
       showAlert(true, "Task Edited.");
     } else {
       const newTask = {
-        id: uuid(),
+        id: uuidv4(),
         name: name,
         completed: false,
         color: "#009688",
@@ -103,7 +128,6 @@ const App = () => {
         </button>
         { isColorsOpen && <Colors /> }
         { alert && <Alert msg={ alert.msg } /> }
-
       </form>
       <div className='filter'>
         <button
@@ -138,18 +162,16 @@ const App = () => {
           <p className='no-tasks'>Your list is clear!</p>
         ) }
       </DragDropContext>
-      {
-        tasks.length > 2 && (
-          <button
-            className='btn-delete-all'
-            onClick={ deleteAll }
-            title='Delete All Tasks (Completed and Uncompleted)!'
-            onKeyDown={ handleClick }
-          >
-            Clear All
-          </button>
-        )
-      }
+      { tasks.length > 2 && (
+        <button
+          className='btn-delete-all'
+          onClick={ deleteAll }
+          title='Delete All Tasks (Completed and Uncompleted)!'
+          onKeyDown={ handleClick }
+        >
+          Clear All
+        </button>
+      ) }
       <DarkModeToggle />
     </>
   );

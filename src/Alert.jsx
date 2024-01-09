@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useGlobalContext } from "./context";
-import { AlertPropTypes } from "./AlertPropTypes";
+import { AlertPropTypes } from "./PropTypes";
 
 const Alert = ({ msg }) => {
   const { tasks, refContainer, alert, showAlert } = useGlobalContext();

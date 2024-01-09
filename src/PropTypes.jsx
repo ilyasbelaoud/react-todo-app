@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 export const TaskPropTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    completed: PropTypes.bool.isRequired,
-    color: PropTypes.string.isRequired,
+    completed: PropTypes.bool,
+    color: PropTypes.string,
     index: PropTypes.number.isRequired,
 };
 
