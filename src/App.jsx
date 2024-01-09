@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
-import {FaGithub} from 'react-icons/fa'
-import { v4 as uuid } from "uuid";
+import { v4 as uuidv4 } from "uuid";
 import { DragDropContext } from "react-beautiful-dnd";
 import List from "./List";
 import Alert from "./Alert";
-import { useGlobalContext } from "./context";
 import Colors from "./Colors";
 import DarkModeToggle from './DarkModeToggle';
+import { useGlobalContext } from "./context";
 
 const App = () => {
   const {
@@ -24,8 +23,32 @@ const App = () => {
     filter,
     setFilter,
     isColorsOpen,
-    setIsColorsOpen,
   } = useGlobalContext();
+
+  useEffect(() => {
+    inputRef.current.focus();
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [inputRef, tasks]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("../Tasks.json");
+        const responseBody = await response.text();
+        const tasksData = JSON.parse(responseBody);
+        const tasksWithUuid = tasksData.map(task => ({
+          ...task,
+          id: uuidv4()
+        }));
+
+        setTasks(tasksWithUuid);
+      } catch (error) {
+        console.error("Error al cargar las tareas:", error);
+      }
+    };
+
+    fetchData();
+  }, [setTasks]);
 
   const addTask = (e) => {
     e.preventDefault();
@@ -43,14 +66,14 @@ const App = () => {
       showAlert(true, "Task Edited.");
     } else {
       const newTask = {
-        id: uuid().slice(0, 8),
+        id: uuidv4(),
         name: name,
         completed: false,
         color: "#009688",
       };
       setTasks([...tasks, newTask]);
       showAlert(true, "Task Added.");
-      setName("");
+      setName(""); // Clear input
     }
   };
 
@@ -78,73 +101,79 @@ const App = () => {
     }
   };
 
-  const hideColorsContainer = (e) => {
-    //   body.
-    if (e.target.classList.contains("btn-colors")) return;
-    setIsColorsOpen(false);
+  const handleClick = () => {
+    inputRef.current.focus();
   };
 
   return (
-  <>
-    <div className='container' onClick={hideColorsContainer}>
-      {isColorsOpen && <Colors />}
-      {alert && <Alert msg={alert.msg} />}
-      <form className='head' onSubmit={addTask}>
+    <>
+      <form className='head' onSubmit={ addTask } aria-labelledby="formHeading">
+        <label className="text-title" htmlFor="newTaskInput">New Task</label>
         <input
           type='text'
-          ref={inputRef}
+          ref={ inputRef }
           placeholder='New Task'
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={ name }
+          onChange={ (e) => setName(e.target.value) }
         />
-        <button type='submit'>{isEditing ? "Edit" : "Add"}</button>
+        <button
+          type='button'
+          onClick={ (e) => {
+            e.preventDefault();
+            addTask(e);
+          } }
+          onKeyDown={ handleClick }
+        >
+          { isEditing ? "Edit" : "Add" }
+        </button>
+        { isColorsOpen && <Colors /> }
+        { alert && <Alert msg={ alert.msg } /> }
       </form>
       <div className='filter'>
         <button
           data-filter='all'
-          className={filter === "all" ? "active" : ""}
-          onClick={filterTasks}
+          className={ filter === "all" ? "active" : "" }
+          onClick={ filterTasks }
+          onKeyDown={ handleClick }
         >
           All
         </button>
         <button
           data-filter='completed'
-          className={filter === "completed" ? "active" : ""}
-          onClick={filterTasks}
+          className={ filter === "completed" ? "active" : "" }
+          onClick={ filterTasks }
+          onKeyDown={ handleClick }
         >
           Completed
         </button>
         <button
           data-filter='uncompleted'
-          className={filter === "uncompleted" ? "active" : ""}
-          onClick={filterTasks}
+          className={ filter === "uncompleted" ? "active" : "" }
+          onClick={ filterTasks }
+          onKeyDown={ handleClick }
         >
           Uncompleted
         </button>
       </div>
-      <DragDropContext onDragEnd={handleDragEnd}>
-        {tasks.length > 0 ? (
+      <DragDropContext onDragEnd={ handleDragEnd }>
+        { tasks.length > 0 ? (
           <List />
         ) : (
           <p className='no-tasks'>Your list is clear!</p>
-        )}
+        ) }
       </DragDropContext>
-      {tasks.length > 2 && (
+      { tasks.length > 2 && (
         <button
           className='btn-delete-all'
-          onClick={deleteAll}
+          onClick={ deleteAll }
           title='Delete All Tasks (Completed and Uncompleted)!'
+          onKeyDown={ handleClick }
         >
           Clear All
         </button>
-      )}
-	  <DarkModeToggle/>
-	  
-    </div>
-	<div class="footer">
-		<a href='https://github.com/ilyasbelaoud' target='_blank' rel="noopener noreferrer"><FaGithub className='github'/></a>
-	</div>
-	</>
+      ) }
+      <DarkModeToggle />
+    </>
   );
 };
 

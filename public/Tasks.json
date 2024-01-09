@@ -1,0 +1,27 @@
+[
+    {
+        "name": "Do homework",
+        "description": "lorem ipsum",
+        "done": false
+    },
+    {
+        "name": "Cambiar sábanas",
+        "description": "lorem ipsum",
+        "done": false
+    },
+    {
+        "name": "Crear una app para conquistar el mundo",
+        "description": "lorem ipsum",
+        "done": false
+    },
+    {
+        "name": "Terminar con la democracia",
+        "description": "lorem ipsum",
+        "done": false
+    },
+    {
+        "name": "Conocer a Milei",
+        "description": "lorem ipsum",
+        "done": false
+    }
+]

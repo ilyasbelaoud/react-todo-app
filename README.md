@@ -1,11 +1,5 @@
 # React Todo App
 
-A minimalistic, customisable todo app.
-
-## Demo
-
-- Demo hosted on Netlify: [https://react-todo-list-9.netlify.app/](https://react-todo-list-9.netlify.app/)
-
 ## Features
 
 - Dark mode
@@ -21,15 +15,6 @@ A minimalistic, customisable todo app.
 - React Js, Css, Sass
 - React Hooks : useState, useEffect, useRef, useContext
 - react-beautiful-dnd, react-icons, uuidv4...
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for more details
-
-## Author
-
-- Instagram - [@ilyasbelaoud](https://www.instagram.com/ilyasbelaoud)
-- Twitter - [@ilyasbelaoud](https://www.twitter.com/ilyasbelaoud)
 
 ## Instructions
 
